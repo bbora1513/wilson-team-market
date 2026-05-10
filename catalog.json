@@ -1,0 +1,38 @@
+{
+  "marketName": "Wilson Team Market",
+  "version": "1.0.0",
+  "lastUpdated": "2026-05-10",
+  "maintainer": "김보라 / Wilson Korea 커뮤니케이션팀",
+  "plugins": [
+    {
+      "id": "wilson-tools",
+      "name": "Wilson Tools",
+      "version": "1.0.0",
+      "description": "Wilson Korea 마케팅팀 필수 스킬 패키지. Pinterest 무드보드 이미지 자동 수집(/moodboard)과 Downloads 폴더 자동 정리(/sort-files) 두 가지 스킬을 포함한다.",
+      "author": "김보라",
+      "category": "마케팅",
+      "tags": ["무드보드", "이미지수집", "파일정리", "Pinterest", "레퍼런스"],
+      "skills": [
+        {
+          "name": "moodboard",
+          "trigger": "/moodboard 키워드",
+          "summary": "Pinterest에서 키워드로 레퍼런스 이미지 50장을 자동 수집해 폴더에 저장"
+        },
+        {
+          "name": "sort-files",
+          "trigger": "/sort-files",
+          "summary": "Downloads 폴더 파일을 년도→주제로 자동 분류해 output 폴더에 정리"
+        }
+      ],
+      "requires": {
+        "mcp": ["playwright"],
+        "npm": ["playwright"],
+        "os": "Windows"
+      },
+      "file": "plugins/wilson-tools.skill",
+      "installScript": "install.ps1",
+      "updatedAt": "2026-05-10",
+      "downloads": 0
+    }
+  ]
+}

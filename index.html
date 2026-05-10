@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wilson Team Market</title>
+  <style>
+    :root {
+      --brand: #c8102e;
+      --brand-dark: #9e0c24;
+      --bg: #f7f7f7;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --tag-bg: #fef2f2;
+      --tag-color: #c8102e;
+      --radius: 12px;
+      --shadow: 0 1px 4px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-badge {
+      background: var(--brand);
+      color: #fff;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: .5px;
+      padding: 6px 12px;
+      border-radius: 8px;
+    }
+    .logo-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .logo-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .search-box {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 14px;
+      width: 220px;
+      outline: none;
+      transition: border-color .15s;
+    }
+    .search-box:focus { border-color: var(--brand); }
+    .github-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 7px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: all .15s;
+    }
+    .github-link:hover { border-color: var(--text); color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--brand) 0%, #e8334a 100%);
+      color: #fff;
+      padding: 56px 40px;
+      text-align: center;
+    }
+    .hero h1 { font-size: 36px; font-weight: 800; letter-spacing: -.5px; }
+    .hero p { font-size: 16px; opacity: .85; margin-top: 10px; }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      margin-top: 36px;
+    }
+    .stat { text-align: center; }
+    .stat-num { font-size: 32px; font-weight: 800; }
+    .stat-label { font-size: 13px; opacity: .75; margin-top: 2px; }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 40px 80px;
+    }
+
+    /* ── FILTERS ── */
+    .filters {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .filter-label { font-size: 13px; color: var(--muted); margin-right: 4px; }
+    .filter-btn {
+      padding: 6px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all .15s;
+      color: var(--text);
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--brand);
+      color: #fff;
+      border-color: var(--brand);
+    }
+
+    /* ── GRID ── */
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .count-badge {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .card:hover {
+      box-shadow: 0 4px 24px rgba(0,0,0,.12);
+      transform: translateY(-2px);
+    }
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .card-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: var(--tag-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .card-meta { flex: 1; }
+    .card-name {
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .card-author {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .version-badge {
+      font-size: 11px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .card-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* Skills list inside card */
+    .skills-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .skill-item {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .skill-trigger {
+      font-family: 'SF Mono', 'Consolas', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--brand);
+      background: var(--tag-bg);
+      padding: 2px 7px;
+      border-radius: 5px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .skill-summary { font-size: 13px; color: var(--muted); line-height: 1.4; }
+
+    /* Tags */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tag {
+      font-size: 11px;
+      font-weight: 500;
+      background: var(--tag-bg);
+      color: var(--tag-color);
+      padding: 3px 9px;
+      border-radius: 20px;
+    }
+
+    /* Requires */
+    .requires {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .req-chip {
+      background: #f0fdf4;
+      color: #16a34a;
+      border: 1px solid #bbf7d0;
+      border-radius: 5px;
+      padding: 2px 7px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    /* Card footer */
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 4px;
+    }
+    .updated {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .btn-group { display: flex; gap: 8px; }
+    .btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all .15s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .btn-primary {
+      background: var(--brand);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--brand-dark); }
+    .btn-secondary {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--text); }
+
+    /* ── HOW TO ADD ── */
+    .how-to {
+      margin-top: 60px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+    .how-to h2 { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+    .steps { display: flex; flex-direction: column; gap: 16px; }
+    .step { display: flex; gap: 16px; align-items: flex-start; }
+    .step-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--brand);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-content { flex: 1; }
+    .step-title { font-size: 14px; font-weight: 600; }
+    .step-desc { font-size: 13px; color: var(--muted); margin-top: 3px; }
+    code {
+      font-family: 'SF Mono', 'Consolas', monospace;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 32px;
+      font-size: 13px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── NO RESULTS ── */
+    .no-results {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+      display: none;
+    }
+    .no-results.visible { display: block; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-badge">W</div>
+    <div>
+      <div class="logo-title">Wilson Team Market</div>
+      <div class="logo-sub">Claude 스킬 마켓플레이스</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <input class="search-box" type="text" placeholder="스킬 검색..." id="searchInput" />
+    <a class="github-link" href="https://github.com/bbora1513/wilson-team-market" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.31.468-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.929.43.372.823 1.102.823 2.222 0 1.606-.015 2.898-.015 3.293 0 .319.218.694.825.576C20.565 21.796 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      GitHub
+    </a>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>🎾 Wilson Team Market</h1>
+  <p>Wilson Korea 커뮤니케이션팀 전용 Claude 스킬 마켓플레이스</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num" id="stat-plugins">0</div>
+      <div class="stat-label">플러그인</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="stat-skills">0</div>
+      <div class="stat-label">스킬</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="stat-categories">0</div>
+      <div class="stat-label">카테고리</div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="filters">
+    <span class="filter-label">카테고리</span>
+    <button class="filter-btn active" data-cat="all">전체</button>
+  </div>
+
+  <div class="section-title">
+    사용 가능한 플러그인
+    <span class="count-badge" id="count-badge">0개</span>
+  </div>
+
+  <div class="grid" id="pluginGrid"></div>
+  <div class="no-results" id="noResults">검색 결과가 없습니다.</div>
+
+  <div class="how-to">
+    <h2>📦 플러그인 추가하는 방법</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">스킬 폴더 구조 만들기</div>
+          <div class="step-desc">
+            <code>my-skill/SKILL.md</code> 형식으로 폴더를 만들고 SKILL.md에 frontmatter(<code>name</code>, <code>description</code>)와 스킬 내용을 작성한다.
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">.skill 파일로 패키징</div>
+          <div class="step-desc">
+            스킬 폴더를 zip으로 압축한 뒤 확장자를 <code>.skill</code>로 변경한다.
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">이 레포에 PR 올리기</div>
+          <div class="step-desc">
+            <code>plugins/</code> 폴더에 <code>.skill</code> 파일을 추가하고, <code>catalog.json</code>에 플러그인 정보를 등록한 뒤 PR을 올린다.
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">install.ps1로 팀원 배포</div>
+          <div class="step-desc">
+            팀원은 <code>install.ps1 -Plugin 플러그인명</code>을 실행하면 자동 설치된다.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  Wilson Korea 커뮤니케이션팀 · <a href="https://github.com/bbora1513/wilson-team-market" style="color:inherit">github.com/bbora1513/wilson-team-market</a>
+</footer>
+
+<script>
+  const REPO_RAW = 'https://raw.githubusercontent.com/bbora1513/wilson-team-market/main';
+  const CATALOG_URL = `${REPO_RAW}/catalog.json`;
+
+  // catalog.json을 GitHub raw에서 불러온다. 로컬 파일 열기(file://)에서는 fetch가 막히므로 fallback
+  async function loadCatalog() {
+    try {
+      const res = await fetch(CATALOG_URL);
+      if (!res.ok) throw new Error('fetch failed');
+      return await res.json();
+    } catch {
+      // 로컬 fallback
+      const res = await fetch('./catalog.json');
+      return await res.json();
+    }
+  }
+
+  function renderCard(p) {
+    const skillsHtml = (p.skills || []).map(s => `
+      <div class="skill-item">
+        <span class="skill-trigger">${s.trigger}</span>
+        <span class="skill-summary">${s.summary}</span>
+      </div>`).join('');
+
+    const tagsHtml = (p.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
+
+    const reqHtml = p.requires ? [
+      ...(p.requires.mcp || []).map(r => `<span class="req-chip">MCP: ${r}</span>`),
+      ...(p.requires.npm || []).map(r => `<span class="req-chip">npm: ${r}</span>`),
+      p.requires.os ? `<span class="req-chip">OS: ${p.requires.os}</span>` : ''
+    ].filter(Boolean).join('') : '';
+
+    const downloadUrl = `${REPO_RAW}/${p.file}`;
+    const iconMap = { '마케팅': '🎨', '보고서': '📊', '자동화': '⚡', '이미지': '🖼️', '파일': '📁' };
+    const icon = iconMap[p.category] || '🔧';
+
+    return `
+      <div class="card" data-cat="${p.category}" data-name="${p.name.toLowerCase()}" data-tags="${(p.tags||[]).join(' ').toLowerCase()}">
+        <div class="card-header">
+          <div class="card-icon">${icon}</div>
+          <div class="card-meta">
+            <div class="card-name">${p.name}</div>
+            <div class="card-author">by ${p.author} · ${p.category}</div>
+          </div>
+          <span class="version-badge">v${p.version}</span>
+        </div>
+        <div class="card-desc">${p.description}</div>
+        ${skillsHtml ? `<div class="skills-list">${skillsHtml}</div>` : ''}
+        ${tagsHtml ? `<div class="tags">${tagsHtml}</div>` : ''}
+        ${reqHtml ? `<div class="requires">필요: ${reqHtml}</div>` : ''}
+        <div class="card-footer">
+          <span class="updated">업데이트 ${p.updatedAt}</span>
+          <div class="btn-group">
+            <a class="btn btn-secondary" href="${downloadUrl}" download>⬇ 다운로드</a>
+            <button class="btn btn-primary" onclick="installPlugin('${p.id}', '${downloadUrl}', '${p.installScript || ''}')">⚡ 설치 안내</button>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function installPlugin(id, url, script) {
+    const cmd = script
+      ? `# PowerShell에서 실행\nirm ${REPO_RAW}/${script} | iex -Plugin ${id}`
+      : `# .skill 파일을 다운로드 후 Claude Desktop에 드래그앤드롭\n# 또는 install.ps1 -Plugin ${id} 실행`;
+    alert(`설치 방법:\n\n${cmd}\n\n또는 ⬇ 다운로드 버튼으로 .skill 파일을 받아 Claude에 설치하세요.`);
+  }
+
+  async function main() {
+    const catalog = await loadCatalog();
+    const plugins = catalog.plugins || [];
+
+    // Stats
+    const skillCount = plugins.reduce((acc, p) => acc + (p.skills || []).length, 0);
+    const cats = [...new Set(plugins.map(p => p.category))];
+    document.getElementById('stat-plugins').textContent = plugins.length;
+    document.getElementById('stat-skills').textContent = skillCount;
+    document.getElementById('stat-categories').textContent = cats.length;
+    document.getElementById('count-badge').textContent = `${plugins.length}개`;
+
+    // Category filters
+    const filterBar = document.querySelector('.filters');
+    cats.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.dataset.cat = cat;
+      btn.textContent = cat;
+      filterBar.appendChild(btn);
+    });
+
+    // Render cards
+    const grid = document.getElementById('pluginGrid');
+    grid.innerHTML = plugins.map(renderCard).join('');
+
+    // Filter logic
+    let activeCat = 'all';
+    document.querySelector('.filters').addEventListener('click', e => {
+      if (!e.target.classList.contains('filter-btn')) return;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      activeCat = e.target.dataset.cat;
+      applyFilters();
+    });
+
+    // Search logic
+    document.getElementById('searchInput').addEventListener('input', applyFilters);
+
+    function applyFilters() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      let visible = 0;
+      document.querySelectorAll('.card').forEach(card => {
+        const catMatch = activeCat === 'all' || card.dataset.cat === activeCat;
+        const searchMatch = !q || card.dataset.name.includes(q) || card.dataset.tags.includes(q) || card.textContent.toLowerCase().includes(q);
+        const show = catMatch && searchMatch;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      document.getElementById('count-badge').textContent = `${visible}개`;
+      document.getElementById('noResults').classList.toggle('visible', visible === 0);
+    }
+  }
+
+  main().catch(console.error);
+</script>
+</body>
+</html>
