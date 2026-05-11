@@ -1,12 +1,12 @@
 # Wilson Team Market - 스킬 설치 스크립트
 # 사용법: .\install.ps1 -Plugin wilson-tools
-# 또는 원격 실행: irm https://raw.githubusercontent.com/bbora1513/wilson-team-market/main/install.ps1 | iex
+# 또는 원격 실행: irm https://raw.githubusercontent.com/bbora1513/wilson-team-market/master/install.ps1 | iex
 
 param(
   [string]$Plugin = ""
 )
 
-$REPO_RAW  = "https://raw.githubusercontent.com/bbora1513/wilson-team-market/main"
+$REPO_RAW  = "https://raw.githubusercontent.com/bbora1513/wilson-team-market/master"
 $CATALOG   = "$REPO_RAW/catalog.json"
 $SKILLS_DIR = "$env:APPDATA\Claude\local-agent-mode-sessions\skills-plugin"
 

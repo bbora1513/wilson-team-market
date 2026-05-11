@@ -12,7 +12,7 @@
 
 **방법 A — 원클릭 설치 (PowerShell)**
 ```powershell
-irm https://raw.githubusercontent.com/bbora1513/wilson-team-market/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/bbora1513/wilson-team-market/master/install.ps1 | iex
 ```
 
 **방법 B — 플러그인 지정 설치**
