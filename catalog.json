@@ -1,7 +1,7 @@
 {
   "marketName": "Wilson Team Market",
-  "version": "1.0.0",
-  "lastUpdated": "2026-05-10",
+  "version": "1.1.0",
+  "lastUpdated": "2026-05-11",
   "maintainer": "김보라 / Wilson Korea 커뮤니케이션팀",
   "plugins": [
     {
@@ -32,6 +32,34 @@
       "file": "plugins/wilson-tools.skill",
       "installScript": "install.ps1",
       "updatedAt": "2026-05-10",
+      "downloads": 0
+    },
+    {
+      "id": "imc-paperformat",
+      "name": "IMC 기획서 FORMAT",
+      "version": "1.0.0",
+      "description": "Wilson IMC 기획서 FORMAT 엑셀 자동 생성 스킬. 제품명을 입력하면 4-시트(기획서 초안 / SG설명 / 제품상세설명 / 누끼컷) 포맷 파일을 만들고, 월별핵심상품·PRODUCT DESCRIPTION 소스 파일에서 데이터와 임베드 이미지를 자동 추출해 채워준다.",
+      "author": "김보라",
+      "category": "IMC/기획",
+      "tags": ["IMC", "기획서", "엑셀", "포맷", "자동화", "Wilson"],
+      "skills": [
+        {
+          "name": "imc_paperformat",
+          "trigger": "/imc_paperformat 제품명",
+          "summary": "제품명 기준 4-시트 IMC 기획서 FORMAT 엑셀을 자동 생성하고 임베드 이미지까지 SG설명·제품상세설명 시트에 삽입"
+        }
+      ],
+      "requires": {
+        "npm": ["exceljs"],
+        "os": "Windows",
+        "files": [
+          "C:\\Users\\김보라\\Downloads\\윌슨_의류_26SS_IMC월별핵심상품(1223).xlsx",
+          "C:\\Users\\김보라\\Downloads\\★26SS WILSON PRODUCT DESCRIPTION_SG(260109).xlsx"
+        ]
+      },
+      "file": "plugins/imc-paperformat.skill",
+      "installScript": "install.ps1",
+      "updatedAt": "2026-05-11",
       "downloads": 0
     }
   ]
