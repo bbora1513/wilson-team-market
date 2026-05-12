@@ -29,11 +29,18 @@ function Get-Catalog {
 
 function Find-SkillsPluginDir {
   # Claude Desktop의 skills-plugin 폴더 자동 탐색
+  # 스킬이 가장 많이 등록된 manifest.json을 우선 선택 (활성 세션)
   $dirs = Get-ChildItem -Path $SKILLS_DIR -Recurse -Filter "manifest.json" -ErrorAction SilentlyContinue
-  if ($dirs) {
-    return $dirs[0].DirectoryName
-  }
-  return $null
+  if (-not $dirs) { return $null }
+
+  $best = $dirs | Sort-Object {
+    try {
+      $m = Get-Content -LiteralPath $_.FullName -Raw | ConvertFrom-Json
+      @($m.skills).Count
+    } catch { 0 }
+  } -Descending | Select-Object -First 1
+
+  return $best.DirectoryName
 }
 
 function Install-Plugin {
