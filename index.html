@@ -484,6 +484,7 @@
 
 <script>
   const REPO_RAW = 'https://raw.githubusercontent.com/bbora1513/wilson-team-market/master';
+  const PAGES_BASE = 'https://bbora1513.github.io/wilson-team-market';
   const CATALOG_URL = `${REPO_RAW}/catalog.json`;
 
   // catalog.json을 GitHub raw에서 불러온다. 로컬 파일 열기(file://)에서는 fetch가 막히므로 fallback
@@ -514,7 +515,7 @@
       p.requires.os ? `<span class="req-chip">OS: ${p.requires.os}</span>` : ''
     ].filter(Boolean).join('') : '';
 
-    const downloadUrl = `${REPO_RAW}/${p.file}`;
+    const downloadUrl = `${PAGES_BASE}/${p.file}`;
     const iconMap = { '마케팅': '🎨', '보고서': '📊', '자동화': '⚡', '이미지': '🖼️', '파일': '📁' };
     const icon = iconMap[p.category] || '🔧';
 
